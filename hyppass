@@ -1,0 +1,139 @@
+from collections import defaultdict
+
+edges=[]
+def INIT(no):
+  for i in range(no):
+    l=input().split()
+    edges.append(l)
+
+def build_graph():
+    graph = defaultdict(list)
+     
+    for edge in edges:
+        a, b = edge[0], edge[1]
+        graph[a].append(b)
+        graph[b].append(a)
+    return graph
+
+def BFS_SP(graph, start, goal):
+    explored = []
+    queue = [[start]]
+    if start == goal:
+        print("Same Node")
+        return
+  
+    while queue:
+        path = queue.pop(0)
+        node = path[-1]
+
+        if node not in explored:
+            neighbours = graph[node]
+             
+            for neighbour in neighbours:
+                new_path = list(path)
+                new_path.append(neighbour)
+                queue.append(new_path)
+                 
+                if neighbour == goal:
+                    print("Shortest path = ", *new_path)
+                    return
+            explored.append(node)
+ 
+    print("So sorry, but a connecting"\
+                "path doesn't exist :(")
+    return
+    
+ 
+def ADD_PASSENGER(m):
+  for i in range(m):
+    a=input()
+    file1 = open("MyFile.txt","a")
+    file1.write(a)
+    file1.write("\n")
+    file1.close()
+
+def PRINT_Q():
+  file1 = open("MyFile.txt","r")
+  Count = 0
+  Content = file1.read()
+  CoList = Content.split("\n")
+  for i in CoList:
+    if i:
+        Count += 1
+  print(Count)
+  file1.close()
+  file1 = open('MyFile.txt', 'r')
+  Lines = file1.readlines()
+  for line in Lines:
+    print("{}".format(line.strip()))
+
+def START_POD(x):
+  lst=[]
+  l=[]
+  file1 = open("MyFile.txt","r")
+  Count = 0
+  Content = file1.read()
+  CoList = Content.split("\n")
+  for i in CoList:
+    if i:
+        Count += 1  
+  file1 = open('MyFile.txt', 'r')    
+  for i in range(Count):
+    test_string = file1.readlines()
+    for line in test_string:
+      res=[int(i) for i in line.split() if i.isdigit()]
+      for i in res:
+        l.append(i)  
+  l.sort(reverse=True) 
+  l=l[0:x]
+  file1 = open('MyFile.txt', 'r')
+  test = file1.readlines()
+  for i in l:
+    for line in test:
+      if [int(j) for j in line.split() if j.isdigit()]==[i]:
+        for i in range(len(line)):
+          if line[i]==' ':
+            new=line[0:i]
+            lst.append(new)
+            break
+  
+  print(lst)
+  file1=open('MyFile.txt','r')
+  tes=file1.readlines()
+  for j in lst:
+    for line in tes:
+      if tes[0:len(j)]==j:
+        end=line[-1]
+        BFS_SP(graph, star, end)
+  for j in lst:
+    try:
+      with open('MyFile.txt', 'r') as fr:
+        lines = fr.readlines()
+        with open('MyFile.txt', 'w') as fw:
+            for line in lines:
+              if line[0:len(j)] != j:
+                  fw.write(line)
+    except:
+      print("Oops! something error")  
+      
+      
+if __name__ == "__main__":
+  graph = build_graph() 
+   
+k=input()
+if k[0:13]=="ADD_PASSENGER":
+  m=int(k[-1])
+  ADD_PASSENGER(m)
+if k[0:5]=="PRINT":  
+  PRINT_Q()
+if k[0:4]=="INIT": 
+  r=[int(i) for i in k.split() if i.isdigit()]
+  r=r[0] 
+  star=k[-1]
+  INIT(r)
+if k[0:5]=="START":  
+  n=int(k[-1])
+  START_POD(n)      
+      
+      
+      
