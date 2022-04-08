@@ -1,10 +1,12 @@
 from collections import defaultdict
 
 edges=[]
+graph=[]
 def INIT(no):
   for i in range(no):
     l=input().split()
     edges.append(l)
+  graph=build_graph() 
 
 def build_graph():
     graph = defaultdict(list)
@@ -35,7 +37,7 @@ def BFS_SP(graph, start, goal):
                 queue.append(new_path)
                  
                 if neighbour == goal:
-                    print("Shortest path = ", *new_path)
+                    print(*new_path)
                     return
             explored.append(node)
  
@@ -115,11 +117,7 @@ def START_POD(x):
                   fw.write(line)
     except:
       print("Oops! something error")  
-      
-      
-if __name__ == "__main__":
-  graph = build_graph() 
-   
+
 k=input()
 if k[0:13]=="ADD_PASSENGER":
   m=int(k[-1])
@@ -127,13 +125,16 @@ if k[0:13]=="ADD_PASSENGER":
 if k[0:5]=="PRINT":  
   PRINT_Q()
 if k[0:4]=="INIT": 
+  edges=[]
   r=[int(i) for i in k.split() if i.isdigit()]
   r=r[0] 
   star=k[-1]
   INIT(r)
 if k[0:5]=="START":  
   n=int(k[-1])
-  START_POD(n)      
+  START_POD(n)
+   
+     
       
       
       
